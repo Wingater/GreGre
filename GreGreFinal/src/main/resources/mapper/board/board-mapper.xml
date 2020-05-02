@@ -279,4 +279,12 @@
 		<if test="boardCode == null">TB_post_b1</if>
 	</select>
 	
+	<delete id="deleteReportP">
+		delete from TB_report where report_board = #{boardCode} and report_post_no = #{postNo}
+	</delete>
+	
+	<delete id="deleteReportR">
+		delete from TB_report where report_board = #{boardCode} and report_post_no = #{postNo} and report_reply_no = #{replyNo}
+	</delete>
+	
 </mapper>

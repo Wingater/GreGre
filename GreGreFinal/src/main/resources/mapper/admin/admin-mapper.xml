@@ -44,7 +44,8 @@
  			birthday = #{birthday},
  			phone = #{phone},
  			address = #{address},
- 			email = #{email}
+ 			email = #{email},
+ 			gender = #{gender}
  		where
  			member_id = #{memberId}
  	</update>

@@ -14,7 +14,7 @@ var counselorR = [];
 
 <c:forEach items="${list }" var="counselor">
 <script>
-counselorR.push(JSON.parse('${counselor}'));  
+counselorR.push(JSON.parse('${counselor}'));
 </script>
 </c:forEach> 
 

@@ -123,11 +123,13 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int deletePostR(Post post) {
+		
 		return sss.delete("board.deletePostR", post);
 	}
 
 	@Override
 	public int deletePostP(Post post) {
+		sss.delete("board.deleteReportP", post);
 		return sss.delete("board.deletePostP", post);
 	}
 
@@ -138,6 +140,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int deleteReply(Reply reply) {
+		sss.delete("board.deleteReportR", reply);
 		return sss.delete("board.deleteReply", reply);
 	}
 

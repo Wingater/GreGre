@@ -130,55 +130,30 @@
 				</div>
 
 
-<<<<<<< HEAD
-				<div class="row mb-3">
-					<div class="col-md-12">
-						
-							<div class="row">
-=======
-
 				<c:forEach items="${list3 }" var="a">
 					<c:if test="${a.appointNo != null }">
-	
->>>>>>> branch 'master' of https://github.com/Wingater/GreGre
-
-
-										<div class="row mb-3">
-											<div class="col-md-12">
-												<div class="card">
-													<div class="card-body">
-														<div class="row">
-															<div class="col-md-3">
-																<img
-																	src="${pageContext.request.contextPath}/resources/images/counselling/${a.advisImg }"
-																	class="imgmini">
-															</div>
-															<div class="col-md-7">
-																<p>예약한 상담사명 : ${a.advisName}</p>
-																<p>결제정보 : ${a.payInfo }</p>
-																<p>결제일 : ${a.startDay}</p>
-																<p>남은횟수 : ${a.coin }</p>
-															</div>
-
-														</div>
-													</div>
-
-
-												</div>
+						<div class="row mb-3">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-md-3">
+												<img src="${pageContext.request.contextPath}/resources/images/counselling/${a.advisImg }"
+													class="imgmini">
+											</div>
+											<div class="col-md-7">
+												<p>예약한 상담사명 : ${a.advisName}</p>
+												<p>결제정보 : ${a.payInfo }</p>
+												<p>결제일 : ${a.startDay}</p>
+												<p>남은횟수 : ${a.coin }</p>
 											</div>
 										</div>
-
-<<<<<<< HEAD
+									</div>
+								</div>
 							</div>
-
-						
-					</div>
-				</div>
-=======
-		
+						</div>
 					</c:if>
 				</c:forEach>
->>>>>>> branch 'master' of https://github.com/Wingater/GreGre
 
 
 
