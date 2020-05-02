@@ -235,143 +235,7 @@ function addOpt2(optVal1) {
 
 }
 </script>
-<script>
-	function addOpt1(optVal1) {
-		console.log("optVal1="+optVal1)
-		 var dataOpt1 = new Array();
-		<c:forEach items="${optionValue1}" var ="item">
-			dataOpt1.push("${item}");
-		</c:forEach>
-		var dataOpt2 = new Array();
-		<c:forEach items="${optionValue2}" var ="item">
-			dataOpt2.push("${item}");
-		</c:forEach>
-		var dataOptList = new Array();
-		<c:forEach items="${optionList}" var ="item">
-			var optItem = new Object();
-			optItem.optionId = "${item.optionId}";
-			optItem.optionName = "${item.optionName}";
-			optItem.optionValue = "${item.optionValue}";
-			optItem.optionStock = "${item.optionStock}";
-			optItem.optionPrice = "${item.optionPrice}";
-			dataOptList.push(optItem);
-		</c:forEach>
-		var dataResultOption = new Array();
 
-		
-		var idx=0;
-		var t=0;
-		var optPriceArr = new Array();
-		var optValueArr = new Array();
-		var optStockArr = new Array();
-		var optIdArr = new Array();
-		
-		var discountPrice = Number("${p.discountPrice}");
- 		for( idx ; idx<dataOpt1.length;idx++){
-			for( t ; t<dataOpt2.length;t++){
-				var resultOption = optVal1+','+dataOpt2[t];
-				 for (var a=0; a<dataOptList.length;a++) {
-					if(resultOption == dataOptList[a].optionValue){
-						optPriceArr.push(Number(dataOptList[a].optionPrice)-discountPrice);
-						optValueArr.push(dataOpt2[t]);
-						optStockArr.push(dataOptList[a].optionStock);
-						optIdArr.push(dataOptList[a].optionId);
-					}
-					
-				} 
-			}
-		}
-
-		$('span.optVal1').remove();
-		$('#btn-sel-option1').toggleClass("open").next(".dropdown-cont").toggleClass("open");
-		var optValHtml = '<span class="optVal1">' + optVal1 + '</span>';
-		$('#btn-sel-option1').append(optValHtml);
-		
-		var data = [ { 
-			"optVal1" :   optVal1,
-			"optPriceArr" :  optPriceArr[0],
-			"optValueArr" :   optValueArr[0],
-			"optStockArr" :   optStockArr[0],
-			"optIdArr" :   optIdArr[0]
-			
-		    },
-		    { 
-				"optVal1" :   optVal1,
-				"optPriceArr" :  optPriceArr[1],
-				"optValueArr" :   optValueArr[1],
-				"optStockArr" :   optStockArr[1],
-				"optIdArr" :   optIdArr[1]
-				
-			  },
-			  { 
-					"optVal1" :   optVal1,
-					"optPriceArr" :  optPriceArr[2],
-					"optValueArr" :   optValueArr[2],
-					"optStockArr" :   optStockArr[2],
-					"optIdArr" :   optIdArr[2]
-					
-				  },
-				  { 
-						"optVal1" :   optVal1,
-						"optPriceArr" :  optPriceArr[3],
-						"optValueArr" :   optValueArr[3],
-						"optStockArr" :   optStockArr[3],
-						"optIdArr" :   optIdArr[3]
-						
-					  }
-			    
-		    
-		    ];
-		var template = $.templates("#itemTmplOption2");
-		var htmlOutput = template.render(data);
-		$('#opt2-list .item').remove();
-		$("#opt2-list").append(htmlOutput);
-		
-		
-		
-		//optionValue가 없을 때
-		if(${optionValue2}==""){
-			
-			var optId="";
-			var optPrice=0;
-			var optNm1="";
-			var optStock=0;
-			for(var vIdx =0; vIdx <dataOptList.length ; vIdx++){
-				if(dataOptList[vIdx].optionValue == optVal1){
-			
-					optId = dataOptList[vIdx].optionId;
-					optPrice = dataOptList[vIdx].optionPrice;
-					optNm1 = dataOptList[vIdx].optionValue;
-					optStock = dataOptList[vIdx].optionStock;
-				}
-			}
-			var price = "${p.price-p.discountPrice}";
-			var optPriceC = Number(optPrice) -Number('${p.discountPrice}');
-			var data = [ {
-				"optId" : optId,
-				"optPrice" : optPriceC,
-				"optPriceC" : comma(optPriceC),
-				"optNm" : optNm1,
-				"optStock" : Number(optStock)
-			} ];
-			
-			$('span.optNm2').remove();
-
-
-			
-			var template = $.templates("#itemTmplOption");
-			var htmlOutput = template.render(data);
-			$("#selected-option").append(htmlOutput);
-			var prevPrice = Number(uncomma($('#totalPrice').text()))+Number(uncomma(optPriceC));
-		   
-			$('#totalPrice').text(comma(prevPrice));	
-			
-			
-			
-		}
- 
-	}
-</script>
 <script>
 	function addOption(optId, optPrice, optNm1, optNm2, optStock) {
 		var price = "${p.price-p.discountPrice}";
@@ -467,8 +331,8 @@ function detailSubmit(index){
 			return;
 		}
 		 var optionIdArr = [];
-		 if($('[name=optionId]').val()!=null){
-	         $('[name=optionId]').each(function(i){//체크된 리스트 저장
+		 if($('.opt-id-val').val()!=null){
+	         $('.opt-id-val').each(function(i){//체크된 리스트 저장
 	    		optionIdArr.push($(this).val()); 
 	         	console.log("이거는="+$(this).val());
 	          });		 
@@ -886,7 +750,7 @@ $(function(){
 										data-jsv-tmpl="jsvTmpl">
 									
                                         <div class="option-box">
-                                            <input type="hidden" name="optionId"  value="{{:optId}}"> 
+                                            <input type="hidden" name="optionId" class="opt-id-val" value="{{:optId}}"> 
                                             <input type="hidden" name="optionPrice"  value="{{:optPrice}}">
                                             <div class="sel-title">
                                                                                                         선택 : {{:optNm}}

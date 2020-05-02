@@ -1,10 +1,18 @@
 package kh.mclass.IgreMall.order.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,13 +23,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kh.mclass.Igre.member.model.vo.Member;
 import kh.mclass.IgreMall.coupon.model.service.CouponService;
 import kh.mclass.IgreMall.coupon.model.vo.Coupon;
-import kh.mclass.IgreMall.coupon.model.vo.CouponInfo;
 import kh.mclass.IgreMall.order.model.service.OrderService;
 import kh.mclass.IgreMall.order.model.vo.OrderList;
 import kh.mclass.IgreMall.order.model.vo.OrderProduct;
@@ -35,6 +43,7 @@ import kh.mclass.IgreMall.shopMember.model.service.ShopMemberService;
 import kh.mclass.IgreMall.shopMember.model.vo.Cart;
 import kh.mclass.IgreMall.shopMember.model.vo.ShopMember;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
 
 @Slf4j
 @Controller
@@ -49,7 +58,59 @@ public class OrderController {
 	ShopMemberService shopMemberService;
 	@Autowired
 	CouponService couponService;
-
+//	//토스 API 호출
+//	@PostMapping("/shopMemberUpdate.do")
+//	@ResponseBody
+//	public Map<String, Object> getToss() {
+//
+//		URL url = null;
+//		URLConnection connection = null;
+//		StringBuilder responseBody = new StringBuilder();
+//		try {
+//			url = new URL("https://pay.toss.im/api/v2/payments");
+//			connection = url.openConnection();
+//			connection.addRequestProperty("Content-Type", "application/json");
+//			connection.setDoOutput(true);
+//			connection.setDoInput(true);
+//
+//			org.json.simple.JSONObject jsonBody = new JSONObject();
+//			jsonBody.put("orderNo", "1");
+//			jsonBody.put("amount", 10000);
+//			jsonBody.put("amountTaxFree", 0);
+//			jsonBody.put("productDesc", "테스트 결제");
+//			jsonBody.put("apiKey", "sk_test_w5lNQylNqa5lNQe013Nq");
+//		    jsonBody.put("autoExecute", true);
+//		    jsonBody.put("resultCallback", "http://localhost:9090/Igre/callback");
+//		    jsonBody.put("callbackVersion", "V2");  
+//		    jsonBody.put("retUrl", "http://YOUR-SITE.COM/ORDER-CHECK?orderno=1");
+//		    jsonBody.put("retCancelUrl", "http://YOUR-SITE.COM/close");
+//
+//			BufferedOutputStream bos = new BufferedOutputStream(connection.getOutputStream());
+//			
+//		    bos.write(jsonBody.toJSONString().getBytes(StandardCharsets.UTF_8));
+//			bos.flush();
+//			bos.close();
+//
+//			
+//		    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+//			String line = null;
+//			while ((line = br.readLine()) != null) {
+//				responseBody.append(line);
+//			}
+//			br.close();
+//		} catch (Exception e) {
+//			responseBody.append(e);
+//		}
+//
+//		Map<String, Object> map = new HashMap<>();
+//		if (result > 0) {
+//			map.put("memberName", memberName);
+//			map.put("phone", phone);
+//			map.put("email", email);
+//		}
+//
+//		return map;
+//	}
 	// 네이버페이일 경우만
 	@GetMapping("/finishPayment.do")
 	public ModelAndView getFinish(ModelAndView mav, OrderList orderList, HttpSession session,
