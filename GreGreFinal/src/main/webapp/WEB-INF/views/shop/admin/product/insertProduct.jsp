@@ -420,18 +420,12 @@ input[name="paymentMethodCode"] {
 					contentType : false,
 					enctype : 'multipart/form-data',
 					processData : false,
+					//summbernote 이미지 저장 성공 후 
 					success : function(data) {
-
-						console.log("img up load success");
-
 						var url = '${pageContext.request.contextPath}/resources/upload/shop/productDetail/'
 								+ data[1];
-
-						console.log("url=" + url);
 						$(el).summernote('editor.insertImage', url);
-						$('summernote')
-								.append(
-										'<img src="'+url+'" width = "400", height = "auto" />');
+						$('summernote').append('<img src="'+url+'" width = "400", height = "auto" />');
 					}
 				});
 	}

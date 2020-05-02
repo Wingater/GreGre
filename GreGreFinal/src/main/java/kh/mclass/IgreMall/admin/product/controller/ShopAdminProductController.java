@@ -388,27 +388,21 @@ public class ShopAdminProductController {
 	@PostMapping("/insertImg.do")
 	@ResponseBody
 	public List<String> insertBoardImg(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-
 		List<String> list = new ArrayList<String>();
 		// 파일명 재생성
 		String originalFileName = file.getOriginalFilename();
 		String renamedFileName = Utils.getRenamedFileName(originalFileName);
-
-		// 파일 이동 경로 /resources/upload/admin/board
+		// 파일 이동 경로
 		String saveDirectory = request.getServletContext().getRealPath("/resources/upload/shop/productDetail");
-
 		// 파일 생성.
 		try {
 			file.transferTo(new File(saveDirectory, renamedFileName));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
-
 		list.add(originalFileName);
 		list.add(renamedFileName);
 		list.add("../resources/upload/shop/productDetail/" + renamedFileName);
-
-		log.debug("insertImg login end {}", list);
 		return list;
 	}
 

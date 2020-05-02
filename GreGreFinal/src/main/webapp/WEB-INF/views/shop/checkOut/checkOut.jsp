@@ -42,6 +42,7 @@
 	//총 적림 예상금액
 	pageContext.setAttribute("totalPoint", totalPoint);
 %>
+
 <!--checkOut css-->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/resources/css/shop/check-out.css">
@@ -1039,7 +1040,35 @@ function goMember() {
 		$('[name=usedPoint]').val(usedPoint);
 		$('[name=usedCoupon]').val(usedCoupon);
 		$('[name=totalPrice]').val(totalPrice);
+		
+		//토스
+		if(payMethod == 'to'){
+			console.log("요기");
+			var request = new XMLHttpRequest();
 
+			request.open('POST', 'https://private-anon-8e0b89fbc2-tossbutton.apiary-mock.com/transfer-web/linkgen-api/link');
+
+			request.setRequestHeader('Content-Type', 'application/json');
+
+			request.onreadystatechange = function () {
+			  if (this.readyState === 4) {
+			    console.log('Status:', this.status);
+			    console.log('Headers:', this.getAllResponseHeaders());
+			    console.log('Body:', this.responseText);
+			  }
+			};
+
+
+			var body = {
+	/* 		  'apiKey': 'sk_test_w5lNQylNqa5lNQe013Nq', */
+			  'bankName': '기업',
+			  'bankAccountNo': '21604828802016',
+			  'amount': 15000,
+			  'message': '토스입금버튼'
+			};
+
+			request.send(JSON.stringify(body));
+		}
 		//카카오페이
 		if (payMethod == 'ka') {
 			BootPay
@@ -1400,8 +1429,7 @@ function goMember() {
 			var IMP = window.IMP; // 생략가능
 			IMP.init('iamport');
 
-			IMP
-					.request_pay(
+			IMP.request_pay(
 							{
 								pg : 'inicis', // version 1.1.0부터 지원.
 								pay_method : 'card',
